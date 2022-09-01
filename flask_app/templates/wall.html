@@ -20,13 +20,32 @@
         <!-- post box -->
         <div class="box border-bottom border-3 border-dark pb-5">
             <h2 class="fs-4 m-5">What's on your mind? Create a new post:</h2>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <p class="text-danger">{{ message }}</p>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
             <form class="d-flex flex-column align-items-end w-75 mx-auto" action="/post" method="post">
                 <textarea class="form-control border border-3 border-dark" name="post_content" id="post_content" rows="10"></textarea>
                 <input type="submit" value="Publish" class="btn btn-primary mt-5">
             </form>
         </div>
         <!-- feed -->
-        
+        {% for post in posts: %}
+        <div class="card m-5 border border-3 border-dark">
+            <div class="card-header">
+                {{ post['author'] }}
+            </div>
+            <div class="card-body border-top border-bottom border-3 border-dark">
+                <p class="card-text">{{ post['content'] }}</p>
+            </div>
+            <div class="card-footer text-muted">
+                {{ post['created_at'] }}
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </body>
 </html>

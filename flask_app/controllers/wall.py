@@ -24,5 +24,6 @@ def f_post():
         'id':session.get('user_id'),
         'content': inbound.get('post_content')
     }
-    User.create_post(data)
+    if User.validate_post(data):
+        User.create_post(data)
     return redirect('/wall')

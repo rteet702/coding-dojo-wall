@@ -58,6 +58,14 @@ class User:
 
         return is_valid
 
+    @staticmethod
+    def validate_post(data):
+        is_valid = True
+        if not data.get('content') or len(data.get('content')) < 3:
+            flash('* Post content is too short.')
+            is_valid = False
+        return is_valid
+
     @classmethod
     def find_by_email(cls, data):
         query = "SELECT * FROM users WHERE email=%(email)s"
@@ -87,7 +95,7 @@ class User:
 
     @classmethod
     def get_all_posts_with_users(cls):
-        query = "SELECT CONCAT_WS(' ',first_name, last_name) as author, content, posts.created_at FROM posts JOIN users ON user_id = users.id;"
+        query = "SELECT CONCAT_WS(' ',first_name, last_name) as author, content, posts.created_at FROM posts JOIN users ON user_id = users.id ORDER BY posts.created_at DESC;"
         results = connectToMySQL('coding-dojo-wall').query_db(query)
         posts = []
         for post in results:
