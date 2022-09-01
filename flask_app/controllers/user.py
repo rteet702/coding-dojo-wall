@@ -39,10 +39,10 @@ def f_submit():
             user_in_db = User.find_by_email(data)
 
             if not user_in_db:
-                flash('Invalid Email/Password')
+                flash('* Invalid Email/Password', 'email_login')
                 return redirect('/')
             if not bcrypt.check_password_hash(user_in_db.password, inbound.get('password')):
-                flash('Invalid Email/Password')
+                flash('* Invalid Email/Password', 'email_login')
                 return redirect('/')
             
             session['user_id'] = user_in_db.id

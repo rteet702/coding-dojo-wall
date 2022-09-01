@@ -34,19 +34,19 @@ class User:
                     data.get('confirm_password')]
         if not all(all_data):
             is_valid = False
-            flash('* Please enter all information.')
+            flash('* Please enter all information.', 'error')
         if len(all_data[0]) < 2:
             is_valid = False
-            flash('* First name must be at least 2 characters long.')
+            flash('* First name must be at least 2 characters long.', 'first_name')
         if len(all_data[1]) < 2:
             is_valid = False
-            flash('* Last name must be at least 2 characters long.')
+            flash('* Last name must be at least 2 characters long.', 'last_name')
         if not EMAIL_REGEX.match(all_data[2]):
             is_valid = False
-            flash('* Please enter a valid email.')
+            flash('* Please enter a valid email.', 'email')
         if all_data[3] != all_data[4]:
             is_valid = False
-            flash('* Passwords do not match.')
+            flash('* Passwords do not match.', 'password')
 
         email_data = {
             'email': all_data[2]
@@ -54,7 +54,7 @@ class User:
 
         if User.find_by_email(email_data):
             is_valid = False
-            flash('* Email address is already in use.')
+            flash('* Email address is already in use.', 'email')
 
         return is_valid
 
