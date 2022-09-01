@@ -94,11 +94,29 @@ class User:
         return connectToMySQL('coding-dojo-wall').query_db(query, data)
 
     @classmethod
+    def create_comment(cls, data):
+        query = "INSERT INTO comments (content, user_id, post_id) VALUES (%(content)s, %(id)s, %(post_id)s);"
+        return connectToMySQL('coding-dojo-wall').query_db(query, data)
+
+    @classmethod
     def get_all_posts_with_users(cls):
-        query = "SELECT CONCAT_WS(' ',first_name, last_name) as author, content, posts.created_at FROM posts JOIN users ON user_id = users.id ORDER BY posts.created_at DESC;"
+        query = "SELECT posts.id, CONCAT_WS(' ',first_name, last_name) as author, content, posts.created_at FROM posts JOIN users ON user_id = users.id ORDER BY posts.created_at DESC;"
         results = connectToMySQL('coding-dojo-wall').query_db(query)
         posts = []
         for post in results:
             posts.append(post)
 
         return posts
+
+    @classmethod
+    def get_all_comments_with_users(cls):
+        query = """SELECT comments.id, posts.id, CONCAT_WS(' ',first_name, last_name) as author, comments.content, comments.created_at FROM comments 
+                    JOIN users ON user_id = users.id 
+                    JOIN posts ON post_id = posts.id 
+                    ORDER BY comments.created_at DESC;"""
+        results = connectToMySQL('coding-dojo-wall').query_db(query)
+        comments = []
+        for comment in results:
+            comments.append(comment)
+
+        return comments

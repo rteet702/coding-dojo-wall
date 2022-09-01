@@ -13,8 +13,10 @@ def r_wall():
     }
     user = User.find_by_id(data)
     posts = User.get_all_posts_with_users()
+    comments = User.get_all_comments_with_users()
+    print(comments)
 
-    return render_template('wall.html', user=user, posts=posts)
+    return render_template('wall.html', user=user, posts=posts, comments=comments)
 
 
 @app.route('/post', methods=['POST'])
@@ -26,4 +28,16 @@ def f_post():
     }
     if User.validate_post(data):
         User.create_post(data)
+    return redirect('/wall')
+
+
+@app.route('/comment', methods=['POST'])
+def f_comment():
+    inbound = request.form
+    data = {
+        'id':session.get('user_id'),
+        'post_id' : inbound.get('post_id'),
+        'content': inbound.get('comment_content')
+    }
+    User.create_comment(data)
     return redirect('/wall')

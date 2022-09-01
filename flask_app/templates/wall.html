@@ -23,7 +23,7 @@
             {% with messages = get_flashed_messages() %}
             {% if messages %}
             {% for message in messages %}
-            <p class="text-danger">{{ message }}</p>
+            <p class="text-danger mx-5">{{ message }}</p>
             {% endfor %}
             {% endif %}
             {% endwith %}
@@ -36,13 +36,28 @@
         {% for post in posts: %}
         <div class="card m-5 border border-3 border-dark">
             <div class="card-header">
-                {{ post['author'] }}
+                {{ post['author'] }} | <span class="text-muted">{{ post['created_at'] }}</span>
             </div>
             <div class="card-body border-top border-bottom border-3 border-dark">
-                <p class="card-text">{{ post['content'] }}</p>
+                <p class="card-text py-5">{{ post['content'] }}</p>
             </div>
-            <div class="card-footer text-muted">
-                {{ post['created_at'] }}
+            {% for comment in comments: %}
+            {% if comment and comment['posts.id'] == post['id']: %}
+            <div class="comments p-5 pb-0">
+                <p>{{ comment['author'] }} | <span class="text-muted">{{ comment['created_at'] }}</span></p>
+                <p>{{ comment['content'] }}</p>
+            </div>
+                {% endif %}
+                {% endfor %}
+            <div class="row p-5">
+                <p>Post a comment...</p>
+                <form action="/comment" method="post">
+                    <input type="hidden" name="post_id" value="{{ post['id'] }}">
+                    <div class="box d-flex flex-column align-items-end">
+                        <textarea class="form-control my-3" name="comment_content" id="comment_content" rows="3"></textarea>
+                        <input type="submit" value="Comment" class="btn btn-primary">
+                    </div>
+                </form>
             </div>
         </div>
         {% endfor %}
