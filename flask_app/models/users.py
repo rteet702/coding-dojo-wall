@@ -79,3 +79,18 @@ class User:
                     VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s);"""
         result = connectToMySQL('coding-dojo-wall').query_db(query, data)
         return result
+
+    @classmethod
+    def create_post(cls, data):
+        query = "INSERT INTO posts (content, user_id) VALUES (%(content)s, %(id)s);"
+        return connectToMySQL('coding-dojo-wall').query_db(query, data)
+
+    @classmethod
+    def get_all_posts_with_users(cls):
+        query = "SELECT CONCAT_WS(' ',first_name, last_name) as author, content, posts.created_at FROM posts JOIN users ON user_id = users.id;"
+        results = connectToMySQL('coding-dojo-wall').query_db(query)
+        posts = []
+        for post in results:
+            posts.append(post)
+
+        return posts

@@ -12,6 +12,17 @@ def r_wall():
         'id':session.get('user_id')
     }
     user = User.find_by_id(data)
-    print(user)
+    posts = User.get_all_posts_with_users()
 
-    return render_template('wall.html', user=user)
+    return render_template('wall.html', user=user, posts=posts)
+
+
+@app.route('/post', methods=['POST'])
+def f_post():
+    inbound = request.form
+    data = {
+        'id':session.get('user_id'),
+        'content': inbound.get('post_content')
+    }
+    User.create_post(data)
+    return redirect('/wall')
