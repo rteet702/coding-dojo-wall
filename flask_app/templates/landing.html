@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wall</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/bootstrap/bootstrap.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- header  -->
+        <h1 class="fs-3 py-5 border-bottom border-3 border-dark">Coding Dojo Wall</h1>
+        <!-- top row -->
+        <div class="row">
+            <!-- register side -->
+            <div class="col p-3">
+                <h2 class="fs-1 my-3">Register</h2>
+                <form action="/submit" method="post">
+                    <input type="hidden" name="submit_mode" value="register">
+                    <div class="row mb-3">
+                        <label for="first_name" class="col-sm-2 col-form-label">First Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="first_name" id="first_name">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="last_name" class="col-sm-2 col-form-label">Last Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="last_name" id="last_name">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="email" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" name="email" id="email">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="password" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" name="password" id="password">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="confirm_password" class="col-sm-2 col-form-label">Confirm Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" name="confirm_password" id="confirm_password">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary float-end">Register</button>
+                </form>
+            </div>
+            <!-- log in side -->
+            <div class="col p-3">
+                <h2 class="fs-1 my-3">Log In</h2>
+                <form action="/submit" method="post">
+                    <input type="hidden" name="submit_mode" value="login">
+                    <div class="row mb-3">
+                        <label for="email" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" name="email" id="email">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="password" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" name="password" id="password">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary float-end">Sign in</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
