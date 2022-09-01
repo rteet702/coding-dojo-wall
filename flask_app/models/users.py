@@ -62,11 +62,16 @@ class User:
     def find_by_email(cls, data):
         query = "SELECT * FROM users WHERE email=%(email)s"
         result = connectToMySQL('coding-dojo-wall').query_db(query, data)
-        print(result)
         if result == ():
             return False
         else:
             return cls(result[0])
+
+    @classmethod
+    def find_by_id(cls, data):
+        query = "SELECT * FROM users WHERE id = %(id)s;"
+        result = connectToMySQL('coding-dojo-wall').query_db(query, data)
+        return cls(result[0])
 
     @classmethod
     def create_user(cls, data):

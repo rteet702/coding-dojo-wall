@@ -49,3 +49,9 @@ def f_submit():
             return redirect('/wall')
         else:
             return redirect('/')
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')

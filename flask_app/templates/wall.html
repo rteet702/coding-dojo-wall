@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wall</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/bootstrap/bootstrap.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="box border-bottom border-3 border-dark d-flex flex-row align-items-center justify-content-between">
+            <!-- header  -->
+            <h1 class="fs-3 py-5">Coding Dojo Wall</h1>
+            <div class="box d-flex">
+                <p class="mx-5">Welcome, {{ user.first_name }}</p>
+                <a class="mx-3" href="/logout">Logout</a>
+            </div>
+        </div>
+        <!-- post box -->
+    </div>
+</body>
+</html>
