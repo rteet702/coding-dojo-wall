@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wall</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/bootstrap/bootstrap.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- header  -->
+        <div class="box border-bottom border-3 border-dark d-flex flex-row align-items-center justify-content-between">
+            <h1 class="fs-3 py-5">Coding Dojo Wall</h1>
+            <div class="box d-flex">
+                <p class="mx-5">Welcome, {{ user.first_name }}</p>
+                <a class="mx-3" href="/logout">Logout</a>
+            </div>
+        </div>
+        <!-- post box -->
+        <div class="box border-bottom border-3 border-dark pb-5">
+            <h2 class="fs-4 m-5">What's on your mind? Create a new post:</h2>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <p class="text-danger mx-5">{{ message }}</p>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <form class="d-flex flex-column align-items-end w-75 mx-auto" action="/post" method="post">
+                <textarea class="form-control border border-3 border-dark" name="post_content" id="post_content" rows="10"></textarea>
+                <input type="submit" value="Publish" class="btn btn-primary mt-5">
+            </form>
+        </div>
+        <!-- feed -->
+        {% for post in posts: %}
+        <div class="card m-5 border border-3 border-dark">
+            <div class="card-header">
+                {{ post['author'] }} | <span class="text-muted">{{ post['created_at'] }}</span>
+            </div>
+            <div class="card-body border-top border-bottom border-3 border-dark">
+                <p class="card-text py-5">{{ post['content'] }}</p>
+            </div>
+            {% for comment in comments: %}
+            {% if comment and comment['posts.id'] == post['id']: %}
+            <div class="comments p-5 pb-0">
+                <p>{{ comment['author'] }} | <span class="text-muted">{{ comment['created_at'] }}</span></p>
+                <p>{{ comment['content'] }}</p>
+            </div>
+                {% endif %}
+                {% endfor %}
+            <div class="row p-5">
+                <p>Post a comment...</p>
+                <form action="/comment" method="post">
+                    <input type="hidden" name="post_id" value="{{ post['id'] }}">
+                    <div class="box d-flex flex-column align-items-end">
+                        <textarea class="form-control my-3" name="comment_content" id="comment_content" rows="3"></textarea>
+                        <input type="submit" value="Comment" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
